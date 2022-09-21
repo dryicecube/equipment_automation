@@ -37,7 +37,7 @@ rth.write_str("CHAN:TYPE HRES")     # Switching high res
 rth.write_str("CHAN1:STAT ON")     # Switch Channel 1 OFF
 #rth.write_str("CHAN2:STAT ON")      # Switch Channel 2 ON
 
-tmscale= 5E-9                              #enter the timescae
+tmscale= 10E-9                              #enter the timescae
 
 
 #x=np.arange(0,12*tmscale,0.01)
@@ -52,33 +52,38 @@ rth.write_str((timescale))          #timescale
 # #rth.write_str("CHAN1:COUP DCL")    #1Mohm termination resistance
 rth.write_str("CHAN1:COUP DC")      #50ohm termination resistance
 
-rth.write_str("TRIG:A:TYPE RIS")    #rising edge rigger
-rth.write_str("TRIG:A:LEV1 0")
+##### trigger########
+rth.write("TRIG:A:MODE AUTO")
 rth.write_str("TRIG:A:SOUR CH1")    #trigger channel
-rth.write_str("TRIG:A:EDGE:SLOP POS")
+rth.write("TRIG:A:TYPE EDGE")
+#rth.write_str("TRIG:A:EDGE:SLOP POS")
+#rth.write_str("TRIG:A:TYPE RIS")    #rising edge rigger
+rth.write_str("TRIG:A:LEV1 0")
 
 
 
 
 
-start = time()
-rth.write_str("FORM:DATA ASC")
-rth.data_chunk_size = 1000000  # transfer in blocks of 100k bytes (default)
-data_asc = rth.query_bin_or_ascii_float_list("CHAN1:DATA?")
-
-##writing data in file
-data=np.array(data_asc)
-now = datetime.now()
-f = open('run_file_'+str(tmscale)+'_'+str(now), 'a')
-for i in range(len(data)):
-    f.write(f"{data[i]}\n")
-print(f'ASCII waveform transfer elapsed time: {time() - start:.3f}sec')
 
 
-plt.figure(1)
-plt.plot(data_asc)
-plt.title('waveform; Timescale:'+str(tmscale)) 
-plt.grid()
-plt.show()
-rth.close()
-f.close()
+# start = time()
+# rth.write_str("FORM:DATA ASC")
+# rth.data_chunk_size = 1000000  # transfer in blocks of 100k bytes (default)
+# data_asc = rth.query_bin_or_ascii_float_list("CHAN1:DATA?")
+
+# ##writing data in file
+# data=np.array(data_asc)
+# now = datetime.now()
+# f = open('run_file_'+str(tmscale)+'_'+str(now), 'a')
+# for i in range(len(data)):
+#     f.write(f"{data[i]}\n")
+# print(f'ASCII waveform transfer elapsed time: {time() - start:.3f}sec')
+
+
+# plt.figure(1)
+# plt.plot(data_asc)
+# plt.title('waveform; Timescale:'+str(tmscale)) 
+# plt.grid()
+# plt.show()
+# rth.close()
+# f.close()
