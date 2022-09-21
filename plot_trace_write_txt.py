@@ -66,24 +66,24 @@ rth.write_str("TRIG:A:LEV1 0")
 
 
 
-# start = time()
-# rth.write_str("FORM:DATA ASC")
-# rth.data_chunk_size = 1000000  # transfer in blocks of 100k bytes (default)
-# data_asc = rth.query_bin_or_ascii_float_list("CHAN1:DATA?")
+start = time()
+rth.write_str("FORM:DATA ASC")
+rth.data_chunk_size = 1000000  # transfer in blocks of 100k bytes (default)
+data_asc = rth.query_bin_or_ascii_float_list("CHAN1:DATA?")
 
-# ##writing data in file
-# data=np.array(data_asc)
-# now = datetime.now()
-# f = open('run_file_'+str(tmscale)+'_'+str(now), 'a')
-# for i in range(len(data)):
-#     f.write(f"{data[i]}\n")
-# print(f'ASCII waveform transfer elapsed time: {time() - start:.3f}sec')
+##writing data in file
+data=np.array(data_asc)
+now = datetime.now()
+f = open('run_file_'+str(tmscale)+'_'+str(now), 'a')
+for i in range(len(data)):
+    f.write(f"{data[i]}\n")
+print(f'ASCII waveform transfer elapsed time: {time() - start:.3f}sec')
 
 
-# plt.figure(1)
-# plt.plot(data_asc)
-# plt.title('waveform; Timescale:'+str(tmscale)) 
-# plt.grid()
-# plt.show()
-# rth.close()
-# f.close()
+plt.figure(1)
+plt.plot(data_asc)
+plt.title('waveform; Timescale:'+str(tmscale)) 
+plt.grid()
+plt.show()
+rth.close()
+f.close()
